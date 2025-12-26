@@ -1,0 +1,5 @@
+/* 
+  Global stylesheet for FinWise
+  Tailwind v4 uses single import entry
+*/
+@import "tailwindcss";
