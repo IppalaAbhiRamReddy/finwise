@@ -64,3 +64,52 @@ class GoalListCreateView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save(user=request.user)
         return Response(serializer.data, status=201)
+
+
+"""
+Dashboard API view.
+
+Purpose:
+- Aggregate financial data for the dashboard
+- Serve a single, optimized response
+"""
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
+from core.services.dashboard import (
+    get_current_month,
+    get_monthly_transactions,
+    calculate_totals,
+    category_breakdown,
+    budget_usage,
+    goal_progress,
+)
+
+
+from core.services.insights import generate_insights
+class DashboardSummaryView(APIView):
+    """
+    Returns summarized dashboard data for the authenticated user.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        transactions = get_monthly_transactions(user)
+
+        response = {
+            "period": {
+                "month": get_current_month(),
+                "currency": getattr(user.profile, "currency", "INR")
+            },
+            "totals": calculate_totals(transactions),
+            "categories": category_breakdown(transactions),
+            "budgets": budget_usage(user, transactions),
+            "goals": goal_progress(user),
+            "insights": generate_insights(user, transactions)
+
+        }
+
+        return Response(response)
