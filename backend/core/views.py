@@ -113,3 +113,37 @@ class DashboardSummaryView(APIView):
         }
 
         return Response(response)
+
+"""
+Alerts API view.
+
+Purpose:
+- Aggregate rule-based alerts and ML insights
+- Return a unified alerts list
+"""
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
+from core.services.alerts import generate_rule_based_alerts
+from core.services.ml_adapter import fetch_ml_insights
+
+
+class AlertsView(APIView):
+    """
+    Returns alerts for the authenticated user.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+
+        rule_alerts = generate_rule_based_alerts(user)
+        ml_alerts = fetch_ml_insights(user.id)
+
+        alerts = rule_alerts + ml_alerts
+
+        return Response({
+            "alerts": alerts
+        })
