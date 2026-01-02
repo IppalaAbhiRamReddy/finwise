@@ -22,8 +22,9 @@ class Profile(models.Model):
 
     # Monthly income declared by the user (used only for insights, not enforcement)
     monthly_income = models.DecimalField(
-        max_digits=10,
-        decimal_places=2
+        max_digits=12,
+        decimal_places=2,
+        default=0 
     )
 
     # Currency preference (ISO code like INR, USD)

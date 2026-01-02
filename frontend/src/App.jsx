@@ -1,15 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Alerts from "./pages/Alerts";
+import { AuthProvider } from "./context/AuthProvider";
+
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/alerts" element={<Alerts />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/alerts" element={<Alerts />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
