@@ -35,7 +35,9 @@ SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-build-secret-key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG") == "True"
 
-ALLOWED_HOSTS = ["*"]
+raw_hosts = os.getenv("ALLOWED_HOSTS", "")
+
+ALLOWED_HOSTS = [h.strip() for h in raw_hosts.split(",") if h.strip()]
 
 
 # Trust proxy headers from Render
