@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+venv/
+.env_venv/
+.venv/
+.git
+.gitignore
+node_modules/
+staticfiles/
+media/
