@@ -14,7 +14,7 @@ from django.contrib.auth import authenticate
 from rest_framework import status
 
 from rest_framework_simplejwt.tokens import RefreshToken
-from .throttles import LoginThrottle
+from .throttles import RefreshThrottle,LoginThrottle
 from django.contrib.auth.models import User
 
 
