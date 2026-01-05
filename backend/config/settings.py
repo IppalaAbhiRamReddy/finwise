@@ -15,6 +15,10 @@ import os
 from pathlib import Path
 import dj_database_url
 
+#This removes all W042 warnings properly.
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
 if platform.system() == "Windows":
     CELERY_WORKER_POOL = "solo"
 
